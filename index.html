@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小晨猫软件库</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #4da6ff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #aaccff;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .resource-card {
+            background: rgba(30, 40, 80, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(77, 166, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 100, 255, 0.4);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: #4da6ff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .card-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #4da6ff, #00ccff);
+        }
+        
+        .resource-links {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .resource-link {
+            padding: 12px 15px;
+            margin: 10px 0;
+            background: rgba(0, 40, 100, 0.4);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-left: 3px solid #4da6ff;
+            cursor: pointer;
+        }
+        
+        .resource-link:hover {
+            background: rgba(0, 60, 120, 0.6);
+            transform: translateX(5px);
+        }
+        
+        .link-text {
+            display: flex;
+            align-items: center;
+        }
+        
+        .link-text i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            color: #ffcc00;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .link-badge {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img
+    
+    <div class="container">
+        <header>
+            <div class="logo">小晨猫软件库普通版</div>
+            <div class="subtitle">12大资源分类 | 每日更新 | 所有资源均可直接跳转下载</div>
+        </header>
+        
+        <div class="resource-grid" id="resourceGrid">
+            <!-- 资源卡片将通过JavaScript动态生成 -->
+        </div>
+    </div>
+
+    <script>
+        // 资源数据 - 包含12个分类（原有8个+新增4个）
+        const resources = [
+            {
+                id: "video",
+                title: "热门游戏",
+                icon: "fas fa-film",
+                links: [
+                    { name: "和平精英", icon: "fas fa-video", url: "https://www.123912.com/s/etiwjv-ImWc3", badge: "热" },
+                    { name: "王者荣耀", icon: "fas fa-unlock-alt", url: "https://www.123912.com/s/etiwjv-wmWc3"},
+                    { name: "CFM", icon: "fas fa-tv", url: "https://www.123912.com/s/etiwjv-RmWc3" }
+                ]
+            },
+            {
+                id: "game",
+                title: "沙盒游戏",
+                icon: "fas fa-gamepad",
+                links: [
+                    { name: "我的世界", icon: "fas fa-mobile-alt", url: "https://www.123912.com/s/etiwjv-PmWc3", badge: "热" },
+                    { name: "植物大战僵尸2", icon: "fas fa-code", url: "https://www.123912.com/s/etiwjv-7mWc3"},
+                    { name: "元气骑士", icon: "fas fa-plug", url: "https://www.123912.com/s/etiwjv-0mWc3" }
+                ]
+            },
+            {
+                id: "music",
+                title: "必备软件",
+                icon: "fas fa-music",
+                links: [
+                    { name: "NP管理器", icon: "fas fa-headphones", url: "https://www.123912.com/s/etiwjv-bmWc3", badge: "VIP" },
+                    { name: "MT管理器", icon: "fas fa-compact-disc", url: "https://www.123912.com/s/etiwjv-ZmWc3" , badge: "热" }
+                ]
+            },
+            {
+                id: "software",
+                title: "其他游戏",
+                icon: "fas fa-laptop-code",
+                links: [
+                    { name: "心动小镇", icon: "fas fa-file-word", url: "https://www.123912.com/s/etiwjv-3mWc3", badge: "新" },
+                    { name: "地下城与勇士", icon: "fas fa-cog", url: "https://www.123912.com/s/etiwjv-hmWc3" },
+                    { name: "太空行动", icon: "fas fa-image", url: "https://www.123912.com/s/etiwjv-HmWc3" },
+                    { name: "正义枪战", icon: "fas fa-code", url: "https://www.123912.com/s/etiwjv-AmWc3" }
+                ]
+            },
+            {
+                id: "learning",
+                title: "其他游戏2",
+                icon: "fas fa-book",
+                links: [
+                    { name: "超凡先锋", icon: "fas fa-video", url: "https://www.123912.com/s/etiwjv-QmWc3" },
+                    { name: "造梦西游", icon: "fas fa-graduation-cap", url: "https://www.123912.com/s/etiwjv-EmWc3"},
+                    { name: "欢乐钓鱼", icon: "fas fa-file-alt", url: "https://www.123912.com/s/etiwjv-kmWc3" }
+                ]
+            },
+            {
+                id: "app",
+                title: "休闲游戏",
+                icon: "fas fa-mobile-alt",
+                links: [
+                    { name: "米哈游", icon: "fas fa-comment-alt", url: "https://www.123912.com/s/etiwjv-JmWc3"},
+                    { name: "保卫萝卜", icon: "fas fa-camera", url: "https://www.123912.com/s/etiwjv-gmWc3" },
+                    { name: "光遇", icon: "fas fa-wrench", url: "https://www.123912.com/s/etiwjv-FmWc3" },
+                    { name: "蛋仔派对", icon: "fas fa-crown", url: "https://www.123912.com/s/etiwjv-2mWc3"}
+                ]
+            },
+            {
+                id: "live",
+                title: "射击游戏",
+                icon: "fas fa-broadcast-tower",
+                links: [
+                    { name: "萤火突击", icon: "fas fa-tv", url: "https://www.123912.com/s/etiwjv-omWc3", badge: "新" },
+                    { name: "暗区突围", icon: "fas fa-video", url: "https://www.123912.com/s/etiwjv-OmWc3" },
+                    { name: "三角州", icon: "fas fa-satellite-dish", url: "https://www.123912.com/s/etiwjv-NmWc3" }
+                ]
+            },
+            {
+                id: "design",
+                title: "其余游戏",
+                icon: "fas fa-palette",
+                links: [
+                    { name: "高能英雄", icon: "fas fa-paint-brush", url: "https://www.123912.com/s/etiwjv-omWc3"},
+                    { name: "逃跑吧少年", icon: "fas fa-images", url: "https://www.123912.com/s/etiwjv-XmWc3" },
+                    { name: "台球", icon: "fas fa-font", url: "https://www.123912.com/s/etiwjv-nmWc3" },
+                    { name: "王牌战争", icon: "fas fa-cube", url: "https://www.123912.com/s/etiwjv-WmWc3" }
+                ]
+            },
+            {
+                id: "vip",
+                title: "VIP合集",
+                icon: "fas fa-gem",
+                links: [
+                    { name: "文明重启", icon: "fas fa-unlock-alt", url: "https://www.123912.com/s/etiwjv-CmWc3"},
+                    { name: "妄想山海", icon: "fas fa-users", url: "https://www.123912.com/s/etiwjv-DmWc3" },
+                    { name: "碧蓝航线", icon: "fas fa-sync-alt", url: "https://www.123912.com/s/etiwjv-rmWc3" },
+                    { name: "金铲铲", icon: "fas fa-star", url: "https://www.123912.com/s/etiwjv-8mWc3"}
+                ]
+            },
+            {
+                id: "network",
+                title: "网络工具",
+                icon: "fas fa-network-wired",
+                links: [
+                    { name: "使命召唤", icon: "fas fa-globe", url: "https://www.123912.com/s/etiwjv-KmWc3"},
+                    { name: "造梦西游", icon: "fas fa-tachometer-alt", url: "https://www.123912.com/s/etiwjv-UmWc3" },
+                    { name: "尽情期待", icon: "fas fa-user-secret", url: "" },
+                    { name: "尽情期待", icon: "fas fa-router", url: "" }
+                ]
+            }
+        ];
+
+        // 生成资源列表
+        function generateResourceGrid() {
+            const grid = document.getElementById('resourceGrid');
+            
+            resources.forEach(resource => {
+                const card = document.createElement('div');
+                card.className = 'resource-card';
+                card.innerHTML = `
+                    <div class="card-icon">
+                        <i class="${resource.icon}"></i>
+                    </div>
+                    <h3 class="card-title">${resource.title}</h3>
+                    <ul class="resource-links">
+                        ${resource.links.map(link => `
+                            <li class="resource-link" data-url="${link.url}">
+                                <div class="link-text">
+                                    <i class="${link.icon}"></i>
+                                    ${link.name}
+                                    ${link.badge ? `<span class="link-badge">${link.badge}</span>` : ''}
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // 初始化资源网格
+        generateResourceGrid();
+
+        // 添加点击事件 - 实际跳转
+        document.querySelectorAll('.resource-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                
+                // 实际跳转代码
+                window.open(url, '_blank');
+                
+                // 添加点击效果
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<fuck>this from 小晨猫软件库</fuck>
